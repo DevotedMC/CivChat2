@@ -2,10 +2,6 @@ package vg.civcraft.mc.civchat2;
 
 import java.io.File;
 import java.util.LinkedList;
-import java.util.List;
-
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 
 import vg.civcraft.mc.civchat2.command.CivChat2CommandHandler;
 import vg.civcraft.mc.civchat2.database.DatabaseManager;
@@ -16,14 +12,13 @@ import vg.civcraft.mc.civchat2.utility.CivChat2Log;
 import vg.civcraft.mc.civchat2.CivChat2Manager;
 import vg.civcraft.mc.civmodcore.ACivMod;
 import vg.civcraft.mc.civmodcore.command.CommandHandler;
-import vg.civcraft.mc.namelayer.GroupManager.PlayerType;
 import vg.civcraft.mc.namelayer.permission.PermissionType;
 
 /**
  * @author jjj5311
  *
  */
-public class CivChat2 extends ACivMod{
+public class CivChat2 extends ACivMod {
 	
 	private static CivChat2 instance;
 	private static CivChat2Log log_;
@@ -91,17 +86,12 @@ public class CivChat2 extends ACivMod{
 	
 	@SuppressWarnings("unchecked")
 	public void registerNameLayerPermissions() {
-		LinkedList<PlayerType> memberAndAbove = new LinkedList<PlayerType>();
-		memberAndAbove.add(PlayerType.MEMBERS);
-		memberAndAbove.add(PlayerType.MODS);
-		memberAndAbove.add(PlayerType.ADMINS);
-		memberAndAbove.add(PlayerType.OWNER);
-		PermissionType.registerPermission("READ_CHAT", (LinkedList<PlayerType>)memberAndAbove.clone());
-		PermissionType.registerPermission("WRITE_CHAT", (LinkedList<PlayerType>)memberAndAbove.clone());
-	}
-	
-	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
-		return handle.execute(sender, cmd, args);
+		LinkedList <Integer> membersAndAbove = new LinkedList<Integer>();
+		membersAndAbove.add(1);
+		membersAndAbove.add(2);
+		membersAndAbove.add(3);
+		PermissionType.registerPermission("READ_CHAT", (LinkedList<Integer>) membersAndAbove.clone(), "Allows sending messages in this groups chat");
+		PermissionType.registerPermission("WRITE_CHAT", (LinkedList<Integer>) membersAndAbove.clone(), "Allows receiving messages sent in this groups chat");
 	}
 
 	public CommandHandler getCivChat2CommandHandler() {
@@ -140,9 +130,4 @@ public class CivChat2 extends ACivMod{
 	protected String getPluginName() {
 		return "CivChat2";
 	}
-	
-	 @Override
-	 public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args){
-		 return handle == null ? null : handle.complete(sender, cmd, args);
-	 }
 }

@@ -324,8 +324,13 @@ public class CivChat2Manager {
 		}
 		
 		List<Player> members = new ArrayList<Player>();
-		List<UUID> membersUUID = group.getAllMembers();
+		List<UUID> membersUUID = group.getAllTracked();
 		for(UUID uuid : membersUUID){
+			if (group.getPlayerTypeHandler().isBlackListedType(group.getPlayerType(uuid))) {
+				//we dont want to allow sending messages to blacklisted ranks, as this would allow including blacklisted
+				//players in group chats without them being able to leave
+				continue;
+			}
 			//only add online players to members
 			Player toAdd = Bukkit.getPlayer(uuid);
 			if(toAdd != null && toAdd.isOnline() && NameAPI.getGroupManager().hasAccess(

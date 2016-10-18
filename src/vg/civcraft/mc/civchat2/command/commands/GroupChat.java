@@ -8,6 +8,7 @@ import vg.civcraft.mc.civchat2.ChatStrings;
 import vg.civcraft.mc.civchat2.command.ChatCommand;
 import vg.civcraft.mc.namelayer.GroupManager;
 import vg.civcraft.mc.namelayer.NameAPI;
+import vg.civcraft.mc.namelayer.NameLayerPlugin;
 import vg.civcraft.mc.namelayer.group.Group;
 import vg.civcraft.mc.namelayer.permission.PermissionType;
 
@@ -24,8 +25,6 @@ public class GroupChat extends ChatCommand {
 
 	@Override
 	public boolean execute(CommandSender sender, String[] args) {
-
-		GroupManager gm = NameAPI.getGroupManager();
 		boolean isGroupChatting = true;
 		logger.debug("chatMan = [" + chatMan.toString() + "]");
 		if(chatMan.getGroupChatting(player()) == null) {
@@ -41,7 +40,7 @@ public class GroupChat extends ChatCommand {
 				return true;
 			}
 			else {
-				String grpName = gm.getDefaultGroup(player().getUniqueId());
+				String grpName = NameLayerPlugin.getDefaultGroupHandler().getDefaultGroup(player());
 				if (grpName != null) {
 					group = GroupManager.getGroup(grpName);
 					defGroup = true;
