@@ -123,12 +123,14 @@ public class CivChat2Manager {
 		
 		StringBuilder sb = new StringBuilder();
 	
-		String senderName = sender.getName();
-		String receiverName = receiver.getName();
+		String senderName = sender.getDisplayName();
+		String receiverName = receiver.getDisplayName();
+		
 		
 		String senderMessage = sb.append(ChatColor.LIGHT_PURPLE)
 								.append("To ")
-								.append(receiverName) 
+								.append(receiverName)
+								.append(ChatColor.LIGHT_PURPLE)
 								.append(": ")
 								.append(chatMessage)
 								.toString();
@@ -137,6 +139,7 @@ public class CivChat2Manager {
 		String receiverMessage = sb.append(ChatColor.LIGHT_PURPLE) 
 									.append("From ") 
 									.append(senderName)
+									.append(ChatColor.LIGHT_PURPLE)
 									.append(": ") 
 									.append(chatMessage)
 									.toString();
@@ -231,8 +234,7 @@ public class CivChat2Manager {
 							NameAPI.getCurrentName(receiver.getUniqueId()),
 							receiverDistance,
 							newColor.name()));*/
-
-						receiver.sendMessage(String.format(messageFormat, newColor + NameAPI.getCurrentName(sender.getUniqueId()), 
+						receiver.sendMessage(String.format(messageFormat, newColor + sender.getDisplayName(), 
 								newColor + chatMessage));
 					}
 				}
@@ -333,9 +335,9 @@ public class CivChat2Manager {
 				members.add(toAdd);
 			}
 		}
-		
-		String formatted = parse(ChatStrings.chatGroupMessage, group.getName(), sender.getName(), message);
-		String senderName = NameAPI.getCurrentName(sender.getUniqueId());
+
+		String formatted = parse(ChatStrings.chatGroupMessage, group.getName(), sender.getDisplayName(), message);
+		String senderName = sender.getDisplayName();
 		
 		for(Player receiver : members) {
 			if(DBM.isIgnoringGroup(receiver.getUniqueId(), group.getName())){
